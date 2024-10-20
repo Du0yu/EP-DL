@@ -6,8 +6,12 @@ import yaml
 import eppy
 from matplotlib import pyplot as plt
 
+
+
 sys.path.insert(0,r"D:/EnergyPlusV24-1-0")
 from pyenergyplus.api import EnergyPlusAPI
+
+
 
 config = {
     'openstudio_path':'D:/openstudioapplication-1.8.0/',
@@ -39,6 +43,8 @@ config = {
     'FPS': 1000
 
 }
+
+
 output_file = 'config.yaml'
 #将参数保存为yaml文件
 with open(output_file, 'w') as yaml_file:
@@ -269,7 +275,7 @@ def modify_data_each_timestep(state):
         return
 
     '''Temperature'''
-    environment_temp = api.exchange.get_variable_value(state,EPLUS.environment_temp_handle)
+    environment_temp = api.exchange.get_variable_value(state,EPLUS.environment_temp_handle)   #可能获取不到温度
 
     zone1_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_1)
     zone2_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_2)
