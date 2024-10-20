@@ -10408,7 +10408,7 @@ Fan:VariableVolume,
 SetpointManager:Scheduled,
   Setpoint Manager Scheduled 4,           !- Name
   Temperature,                            !- Control Variable
-  Deck_Temperature 23,                    !- Schedule Name
+  Deck_Temperature 15,                    !- Schedule Name
   Node 33;                                !- Setpoint Node or NodeList Name
 
 AirLoopHVAC:SupplyPath,
@@ -10770,7 +10770,7 @@ Fan:VariableVolume,
 SetpointManager:Scheduled,
   Setpoint Manager Scheduled 5,           !- Name
   Temperature,                            !- Control Variable
-  Deck_Temperature 24,                    !- Schedule Name
+  Deck Temperature 3,                     !- Schedule Name
   Node 48;                                !- Setpoint Node or NodeList Name
 
 AirLoopHVAC:SupplyPath,
@@ -11132,7 +11132,7 @@ Fan:VariableVolume,
 SetpointManager:Scheduled,
   Setpoint Manager Scheduled 6,           !- Name
   Temperature,                            !- Control Variable
-  Deck_Temperature 25,                    !- Schedule Name
+  Deck_Temperature 11,                    !- Schedule Name
   Node 61;                                !- Setpoint Node or NodeList Name
 
 AirLoopHVAC:SupplyPath,

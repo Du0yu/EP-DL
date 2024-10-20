@@ -110,15 +110,6 @@ class Data_Bank():
         self.got_handles = False
 
         self.environment_temp_handle = -1
-        self.environment_humd_handle = -1
-        self.environment_solar_azi_handle = -1
-        self.environment_solar_alt_handle = -1
-        self.environment_solar_ang_handle = -1
-
-        self.zone_humd_handle_1 = -1
-        self.zone_humd_handle_2 = -1
-        self.zone_humd_handle_3 = -1
-        self.zone_humd_handle_4 = -1
 
         self.zone_window_handle_1 = -1
         self.zone_window_handle_2 = -1
@@ -185,12 +176,13 @@ class Data_Bank():
     #检查句柄可用性
     def handle_availability(self):
         ''' check handle_availability '''
-        self.handle_list = [self.environment_temp_handle,
-                            self.environment_humd_handle,
-                            # self.environment_solar_azi_handle,
-                            # self.environment_solar_alt_handle,
-                            # self.environment_solar_ang_handle,
+        self.handle_list = [
+                            self.environment_temp_handle,
 
+                            self.zone_window_handle_1,
+                            self.zone_window_handle_2,
+                            self.zone_window_handle_3,
+                            self.zone_window_handle_4,
 
                             self.zone_temp_handle_1, self.zone_temp_handle_2,
                             self.zone_temp_handle_3, self.zone_temp_handle_4,
@@ -202,7 +194,8 @@ class Data_Bank():
                             # self.E_Facility_handle,
                             self.E_HVAC_handle,
                             self.E_Heating_handle,
-                            self.E_Cooling_handle]
+                            self.E_Cooling_handle
+                            ]
         return self.handle_list
 
 
@@ -241,11 +234,7 @@ def modify_data_each_timestep(state):
         if not api.exchange.api_data_fully_ready(state):
             return
         # 获取执行器句柄，注意这里需要提供控件类型、控件名称等参数
-        EPLUS.environment_temp_handle        = api.exchange.get_variable_handle(state, u"SITE OUTDOOR AIR DRYBULB TEMPERATURE", u"ENVIRONMENT")
-        EPLUS.environment_humd_handle        = api.exchange.get_variable_handle(state, u"Site Outdoor Air Drybulb Temperature", u"ENVIRONMENT")
-        # EPLUS.environment_solar_azi_handle   = api.exchange.get_variable_handle(state, u"Site Solar Azimuth Angle", u"ENVIRONMENT")
-        # EPLUS.environment_solar_alt_handle   = api.exchange.get_variable_handle(state, u"Site Solar Altitude Angle", u"ENVIRONMENT")
-        # EPLUS.environment_solar_ang_handle   = api.exchange.get_variable_handle(state, u"Site Solar Hour Angle", u"ENVIRONMENT")
+        EPLUS.environment_temp_handle        = api.exchange.get_variable_handle(state, u"Site Outdoor Air Drybulb Temperature", u"ENVIRONMENT")
 
         EPLUS.zone_window_handle_1 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 1')
         EPLUS.zone_window_handle_2 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 2')
