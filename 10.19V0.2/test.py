@@ -1,12 +1,18 @@
-import sys
 import os
+import random
+import sys
+from collections import deque
+
+import eppy
 import numpy as np
 import openstudio
+import torch
+import torch.nn as nn
+import torch.optim as optim
 import yaml
-import eppy
 from matplotlib import pyplot as plt
 
-sys.path.insert(0,r"D:/EnergyPlusV24-1-0")
+sys.path.insert(0, r"D:/EnergyPlusV24-1-0")
 from pyenergyplus.api import EnergyPlusAPI
 
 config = {
@@ -46,6 +52,7 @@ with open(output_file, 'w') as yaml_file:
 
 print(f'Parameters saved to {output_file}')
 
+
 def save_parameters_to_txt(parameters, file_path):
     with open(file_path, 'w') as file:
         for key, value in parameters.items():
@@ -58,6 +65,8 @@ class Parameters:
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
+
+
 config = Parameters(**config)
 
 
@@ -66,8 +75,8 @@ config = Parameters(**config)
 
 
 current_dir = os.getcwd()
-osm_path = os.path.join(current_dir,config.osm_name_box)
-osm_path = openstudio.path(osm_path) # I guess this is how it wants the path for the translator
+osm_path = os.path.join(current_dir, config.osm_name_box)
+osm_path = openstudio.path(osm_path)  # I guess this is how it wants the path for the translator
 translator = openstudio.osversion.VersionTranslator()
 # Create an example model
 m = translator.loadModel(osm_path).get()
@@ -116,7 +125,6 @@ class Data_Bank():
         self.zone_window_handle_3 = -1
         self.zone_window_handle_4 = -1
 
-
         self.zone_temp_handle_1 = -1
         self.zone_temp_handle_2 = -1
         self.zone_temp_handle_3 = -1
@@ -130,7 +138,6 @@ class Data_Bank():
         self.hvac_clg_3_handle = -1
         self.hvac_htg_4_handle = -1
         self.hvac_clg_4_handle = -1
-
 
         self.E_Facility_handle = -1
         self.E_HVAC_handle = -1
@@ -199,8 +206,66 @@ class Data_Bank():
         return self.handle_list
 
 
+# 定义DQN模型
+class DQN(nn.Module):
+    def __init__(self, state_size, action_size):
+        super(DQN, self).__init__()
+        self.fc1 = nn.Linear(state_size, 24)
+        self.fc2 = nn.Linear(24, 24)
+        self.fc3 = nn.Linear(24, action_size)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        return self.fc3(x)
 
 
+# DQN代理
+class DQNAgent:
+    def __init__(self, state_size, action_size):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.memory = deque(maxlen=2000)
+        self.gamma = 0.95  # 折扣因子
+        self.epsilon = 1.0  # 探索率
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
+        self.learning_rate = 0.001
+        self.model = DQN(state_size, action_size)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.criterion = nn.MSELoss()
+
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.append((state, action, reward, next_state, done))
+
+    def act(self, state):
+        if np.random.rand() <= self.epsilon:
+            return random.randrange(self.action_size)
+        state = torch.FloatTensor(state)
+        with torch.no_grad():
+            act_values = self.model(state)
+        return torch.argmax(act_values[0]).item()
+
+    def replay(self, batch_size):
+        if len(self.memory) < batch_size:
+            return
+        minibatch = random.sample(self.memory, batch_size)
+        for state, action, reward, next_state, done in minibatch:
+            state = torch.FloatTensor(state)
+            next_state = torch.FloatTensor(next_state)
+            target = reward
+            if not done:
+                target = reward + self.gamma * torch.max(self.model(next_state)[0]).item()
+            target_f = self.model(state)
+            target_f = target_f.clone()  # Clone to avoid in-place operation
+            target_f[0][action] = target
+            output = self.model(state)
+            loss = self.criterion(output, target_f)
+            self.optimizer.zero_grad()
+            loss.backward()
+            self.optimizer.step()
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
 
 
 # 定义回调函数，在每个时间步动态修改数据
@@ -223,10 +288,6 @@ def modify_data_each_timestep(state):
     temp_log.append(zone_temp)
     print(f"Current Time: {current_time}, Zone 1 Temperature: {zone_temp}")
 
-
-
-
-
     '''
     Read data
     '''
@@ -236,29 +297,41 @@ def modify_data_each_timestep(state):
         # 获取执行器句柄，注意这里需要提供控件类型、控件名称等参数
         EPLUS.environment_temp_handle        = api.exchange.get_variable_handle(state, u"Site Outdoor Air Drybulb Temperature", u"ENVIRONMENT")
 
-        EPLUS.zone_window_handle_1 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 1')
-        EPLUS.zone_window_handle_2 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 2')
-        EPLUS.zone_window_handle_3 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 3')
-        EPLUS.zone_window_handle_4 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy", 'Thermal Zone 4')
+        EPLUS.zone_window_handle_1 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy",
+                                                                      'Thermal Zone 1')
+        EPLUS.zone_window_handle_2 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy",
+                                                                      'Thermal Zone 2')
+        EPLUS.zone_window_handle_3 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy",
+                                                                      'Thermal Zone 3')
+        EPLUS.zone_window_handle_4 = api.exchange.get_variable_handle(state, "Zone Windows Total Heat Gain Energy",
+                                                                      'Thermal Zone 4')
 
         EPLUS.zone_temp_handle_1 = api.exchange.get_variable_handle(state, "Zone Air Temperature", 'Thermal Zone 1')
         EPLUS.zone_temp_handle_2 = api.exchange.get_variable_handle(state, "Zone Air Temperature", 'Thermal Zone 2')
         EPLUS.zone_temp_handle_3 = api.exchange.get_variable_handle(state, "Zone Air Temperature", 'Thermal Zone 3')
         EPLUS.zone_temp_handle_4 = api.exchange.get_variable_handle(state, "Zone Air Temperature", 'Thermal Zone 4')
 
-        EPLUS.hvac_htg_1_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Heating Setpoint', 'Thermal Zone 1')
-        EPLUS.hvac_clg_1_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Cooling Setpoint', 'Thermal Zone 1')
-        EPLUS.hvac_htg_2_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Heating Setpoint', 'Thermal Zone 2')
-        EPLUS.hvac_clg_2_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Cooling Setpoint', 'Thermal Zone 2')
-        EPLUS.hvac_htg_3_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Heating Setpoint', 'Thermal Zone 3')
-        EPLUS.hvac_clg_3_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Cooling Setpoint', 'Thermal Zone 3')
-        EPLUS.hvac_htg_4_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Heating Setpoint', 'Thermal Zone 4')
-        EPLUS.hvac_clg_4_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control', 'Cooling Setpoint', 'Thermal Zone 4')
+        EPLUS.hvac_htg_1_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Heating Setpoint', 'Thermal Zone 1')
+        EPLUS.hvac_clg_1_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Cooling Setpoint', 'Thermal Zone 1')
+        EPLUS.hvac_htg_2_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Heating Setpoint', 'Thermal Zone 2')
+        EPLUS.hvac_clg_2_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Cooling Setpoint', 'Thermal Zone 2')
+        EPLUS.hvac_htg_3_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Heating Setpoint', 'Thermal Zone 3')
+        EPLUS.hvac_clg_3_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Cooling Setpoint', 'Thermal Zone 3')
+        EPLUS.hvac_htg_4_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Heating Setpoint', 'Thermal Zone 4')
+        EPLUS.hvac_clg_4_handle = api.exchange.get_actuator_handle(state, 'Zone Temperature Control',
+                                                                   'Cooling Setpoint', 'Thermal Zone 4')
 
         # EPLUS.E_Facility_handle = api.exchange.get_meter_handle(state, 'Electricity:Facility')
-        EPLUS.E_HVAC_handle     = api.exchange.get_meter_handle(state, 'Electricity:HVAC')
-        EPLUS.E_Heating_handle  = api.exchange.get_meter_handle(state, 'Heating:Electricity')
-        EPLUS.E_Cooling_handle  = api.exchange.get_meter_handle(state, 'Cooling:Electricity')
+        EPLUS.E_HVAC_handle = api.exchange.get_meter_handle(state, 'Electricity:HVAC')
+        EPLUS.E_Heating_handle = api.exchange.get_meter_handle(state, 'Heating:Electricity')
+        EPLUS.E_Cooling_handle = api.exchange.get_meter_handle(state, 'Cooling:Electricity')
 
         handle_list = EPLUS.handle_availability()
         if -1 in handle_list:
@@ -269,19 +342,19 @@ def modify_data_each_timestep(state):
         return
 
     '''Temperature'''
-    environment_temp = api.exchange.get_variable_value(state,EPLUS.environment_temp_handle)
+    environment_temp = api.exchange.get_variable_value(state, EPLUS.environment_temp_handle)
 
-    zone1_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_1)
-    zone2_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_2)
-    zone3_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_3)
-    zone4_temp = api.exchange.get_variable_value(state,EPLUS.zone_temp_handle_4)
+    zone1_temp = api.exchange.get_variable_value(state, EPLUS.zone_temp_handle_1)
+    zone2_temp = api.exchange.get_variable_value(state, EPLUS.zone_temp_handle_2)
+    zone3_temp = api.exchange.get_variable_value(state, EPLUS.zone_temp_handle_3)
+    zone4_temp = api.exchange.get_variable_value(state, EPLUS.zone_temp_handle_4)
     '''Getting Temperature'''
-    #Set Heating Temp
+    # Set Heating Temp
     hvac_htg_zone1 = api.exchange.get_actuator_value(state, EPLUS.hvac_htg_1_handle)
     hvac_htg_zone2 = api.exchange.get_actuator_value(state, EPLUS.hvac_htg_2_handle)
     hvac_htg_zone3 = api.exchange.get_actuator_value(state, EPLUS.hvac_htg_3_handle)
     hvac_htg_zone4 = api.exchange.get_actuator_value(state, EPLUS.hvac_htg_4_handle)
-    #Set Cooling Temp
+    # Set Cooling Temp
     hvac_ctg_zone1 = api.exchange.get_actuator_value(state, EPLUS.hvac_clg_1_handle)
     hvac_ctg_zone2 = api.exchange.get_actuator_value(state, EPLUS.hvac_clg_2_handle)
     hvac_ctg_zone3 = api.exchange.get_actuator_value(state, EPLUS.hvac_clg_3_handle)
@@ -292,9 +365,7 @@ def modify_data_each_timestep(state):
     zone_window_2003 = api.exchange.get_variable_value(state, EPLUS.zone_window_handle_3)
     zone_window_2004 = api.exchange.get_variable_value(state, EPLUS.zone_window_handle_4)
 
-
-
-    #Maybe used to calculate total HVAC energy
+    # Maybe used to calculate total HVAC energy
 
     # EPLUS.E_Facility.append(api.exchange.get_meter_value(state, EPLUS.E_Facility_handle))
     EPLUS.E_HVAC.append(api.exchange.get_meter_value(state,     EPLUS.E_HVAC_handle))
