@@ -6437,7 +6437,11 @@ OS:Sizing:Zone,
   0.005,                                  !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
   HumidityRatioDifference,                !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  0.005,                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  ,                                       !- Zone Humidistat Dehumidification Set Point Schedule Name
+  ,                                       !- Zone Humidistat Humidification Set Point Schedule Name
+  ,                                       !- Design Zone Air Distribution Effectiveness in Cooling Mode
+  0.8;                                    !- Design Zone Air Distribution Effectiveness in Heating Mode
 
 OS:ZoneHVAC:EquipmentList,
   {1db0f519-f571-48fe-a119-75d92b890555}, !- Handle
@@ -6543,7 +6547,11 @@ OS:Sizing:Zone,
   0.005,                                  !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
   HumidityRatioDifference,                !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  0.005,                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  ,                                       !- Zone Humidistat Dehumidification Set Point Schedule Name
+  ,                                       !- Zone Humidistat Humidification Set Point Schedule Name
+  ,                                       !- Design Zone Air Distribution Effectiveness in Cooling Mode
+  0.8;                                    !- Design Zone Air Distribution Effectiveness in Heating Mode
 
 OS:ZoneHVAC:EquipmentList,
   {e9798227-cd66-4413-ad2d-9c36848e0a71}, !- Handle
@@ -6649,7 +6657,11 @@ OS:Sizing:Zone,
   0.005,                                  !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
   HumidityRatioDifference,                !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  0.005,                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  ,                                       !- Zone Humidistat Dehumidification Set Point Schedule Name
+  ,                                       !- Zone Humidistat Humidification Set Point Schedule Name
+  ,                                       !- Design Zone Air Distribution Effectiveness in Cooling Mode
+  0.8;                                    !- Design Zone Air Distribution Effectiveness in Heating Mode
 
 OS:ZoneHVAC:EquipmentList,
   {c8ecff80-ee79-4664-8d2f-48efe9f9ebec}, !- Handle
@@ -6761,7 +6773,11 @@ OS:Sizing:Zone,
   0.005,                                  !- Zone Cooling Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
   HumidityRatioDifference,                !- Zone Latent Heating Design Supply Air Humidity Ratio Input Method
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  0.005,                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
+  ,                                       !- Zone Humidistat Dehumidification Set Point Schedule Name
+  ,                                       !- Zone Humidistat Humidification Set Point Schedule Name
+  ,                                       !- Design Zone Air Distribution Effectiveness in Cooling Mode
+  0.8;                                    !- Design Zone Air Distribution Effectiveness in Heating Mode
 
 OS:ZoneHVAC:EquipmentList,
   {d36483b1-27f4-41ff-b687-006778821c05}, !- Handle
@@ -12887,7 +12903,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {138046f4-5155-4a6c-abe7-f162f7f6e691}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList, !- Name
+  {3f59dc9c-a9fb-46a6-a9ee-95bfe625e56f}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {f89a722d-6975-45fd-bdcc-3aaeabe5d8f7}, !- Handle
@@ -13571,7 +13588,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {09483f14-c1ba-4ea8-a529-2d7b46c58b7a}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList 1; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 1, !- Name
+  {d0c67541-67e5-42e6-8ebf-ec5b6a94ed15}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {6f55e0c1-c663-4880-9f9c-e78afc60d6bb}, !- Handle
@@ -14134,7 +14152,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {77ba4a04-8f42-4769-b980-98b02ed37830}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList 2; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 2, !- Name
+  {dce18247-7f81-4551-a3fb-122386366d39}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {8cacc2d6-d2eb-41da-bc00-d941b0d203b3}, !- Handle
@@ -14697,7 +14716,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {55377145-1c6f-4041-9141-d02b76f9b98b}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList 3; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 3, !- Name
+  {d74a6d67-612b-438d-bc89-cc20d2bf26ee}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {90ba5a54-42aa-4382-bd4d-3bbd85cb02fa}, !- Handle
@@ -15401,7 +15421,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {ef7f18d3-ef0d-4028-bdc4-4337fc92c000}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList 4; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 4, !- Name
+  {dfc982d1-8832-436b-81e2-fb03a3ed58e0}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {58dced6c-e430-4770-a680-f956c8f1819d}, !- Handle
@@ -16011,7 +16032,8 @@ OS:Sizing:System,
 
 OS:AvailabilityManagerAssignmentList,
   {03f35140-e131-4f12-b032-47e732fb1a82}, !- Handle
-  Air Loop HVAC 1 AvailabilityManagerAssignmentList 5; !- Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 5, !- Name
+  {18bc7b5c-7c7d-4dc2-ae2b-f82b1176c8e0}; !- Availability Manager Name 1
 
 OS:Fan:VariableVolume,
   {e9d59ff3-6063-4416-90ae-b0c9b14988e3}, !- Handle
@@ -16514,5 +16536,192 @@ OS:Output:Variable,
   Output Variable 15,                     !- Name
   *,                                      !- Key Value
   Cooling Coil Total Cooling Rate,        !- Variable Name
+  Hourly;                                 !- Reporting Frequency
+
+OS:AvailabilityManager:NightCycle,
+  {3f59dc9c-a9fb-46a6-a9ee-95bfe625e56f}, !- Handle
+  Availability Manager Night Cycle 5,     !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {34a725a5-d3cc-472d-adce-805546067a52}, !- Control Zone or Zone List Name
+  {d43d4e08-6498-450b-827b-60ecdb03b074}, !- Cooling Control Zone or Zone List Name
+  {8628eda0-5f37-4b25-9d07-70fface45de7}, !- Heating Control Zone or Zone List Name
+  {2c22cc29-8be1-48a5-a10d-099cb81cf237}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {34a725a5-d3cc-472d-adce-805546067a52}, !- Handle
+  Availability Manager Night Cycle 5 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {d43d4e08-6498-450b-827b-60ecdb03b074}, !- Handle
+  Availability Manager Night Cycle 5 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {8628eda0-5f37-4b25-9d07-70fface45de7}, !- Handle
+  Availability Manager Night Cycle 5 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {2c22cc29-8be1-48a5-a10d-099cb81cf237}, !- Handle
+  Availability Manager Night Cycle 5 Heating Zone Fans Only Zone List; !- Name
+
+OS:AvailabilityManager:NightCycle,
+  {d0c67541-67e5-42e6-8ebf-ec5b6a94ed15}, !- Handle
+  Availability Manager Night Cycle 6,     !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {2e3309e0-f8f6-42e8-b125-38a4ab249fc4}, !- Control Zone or Zone List Name
+  {a9cb011c-5963-4964-be4d-2c0c93f497fc}, !- Cooling Control Zone or Zone List Name
+  {4f7c471c-3b4e-47af-8001-f1cf32403f19}, !- Heating Control Zone or Zone List Name
+  {b2d7e762-8fed-4f8e-a50f-7ed15f82832c}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {2e3309e0-f8f6-42e8-b125-38a4ab249fc4}, !- Handle
+  Availability Manager Night Cycle 6 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {a9cb011c-5963-4964-be4d-2c0c93f497fc}, !- Handle
+  Availability Manager Night Cycle 6 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {4f7c471c-3b4e-47af-8001-f1cf32403f19}, !- Handle
+  Availability Manager Night Cycle 6 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {b2d7e762-8fed-4f8e-a50f-7ed15f82832c}, !- Handle
+  Availability Manager Night Cycle 6 Heating Zone Fans Only Zone List; !- Name
+
+OS:AvailabilityManager:NightCycle,
+  {dce18247-7f81-4551-a3fb-122386366d39}, !- Handle
+  Availability Manager Night Cycle 7,     !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {6851e354-1842-474a-bdf3-bbbde1aad7d7}, !- Control Zone or Zone List Name
+  {f49523a9-08c9-4dd1-a064-4b953ed91756}, !- Cooling Control Zone or Zone List Name
+  {2fff2359-4613-4089-b8f1-f6ebad3be232}, !- Heating Control Zone or Zone List Name
+  {99686390-f86a-4f19-a4c5-a52ed5b717dd}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {6851e354-1842-474a-bdf3-bbbde1aad7d7}, !- Handle
+  Availability Manager Night Cycle 7 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {f49523a9-08c9-4dd1-a064-4b953ed91756}, !- Handle
+  Availability Manager Night Cycle 7 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {2fff2359-4613-4089-b8f1-f6ebad3be232}, !- Handle
+  Availability Manager Night Cycle 7 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {99686390-f86a-4f19-a4c5-a52ed5b717dd}, !- Handle
+  Availability Manager Night Cycle 7 Heating Zone Fans Only Zone List; !- Name
+
+OS:AvailabilityManager:NightCycle,
+  {d74a6d67-612b-438d-bc89-cc20d2bf26ee}, !- Handle
+  Availability Manager Night Cycle 8,     !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {a5843546-9ee6-42db-b2b0-2d707aecf0d2}, !- Control Zone or Zone List Name
+  {44ed3127-52b3-45c1-9fd2-b80f3d93cd87}, !- Cooling Control Zone or Zone List Name
+  {82e6f3ce-c83a-40de-af24-1a248ba60985}, !- Heating Control Zone or Zone List Name
+  {66f40ce9-5349-4729-9b6d-a4ed3b534fbf}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {a5843546-9ee6-42db-b2b0-2d707aecf0d2}, !- Handle
+  Availability Manager Night Cycle 8 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {44ed3127-52b3-45c1-9fd2-b80f3d93cd87}, !- Handle
+  Availability Manager Night Cycle 8 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {82e6f3ce-c83a-40de-af24-1a248ba60985}, !- Handle
+  Availability Manager Night Cycle 8 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {66f40ce9-5349-4729-9b6d-a4ed3b534fbf}, !- Handle
+  Availability Manager Night Cycle 8 Heating Zone Fans Only Zone List; !- Name
+
+OS:AvailabilityManager:NightCycle,
+  {dfc982d1-8832-436b-81e2-fb03a3ed58e0}, !- Handle
+  Availability Manager Night Cycle 9,     !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {d3a9f67d-d2ee-46cd-b61c-c27c82497aae}, !- Control Zone or Zone List Name
+  {44463f1f-fc6f-4e29-8514-e37e06b464b5}, !- Cooling Control Zone or Zone List Name
+  {8647e220-1994-47db-94ed-58063351e631}, !- Heating Control Zone or Zone List Name
+  {86854036-73b3-4f7c-b4b6-209561a67c61}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {d3a9f67d-d2ee-46cd-b61c-c27c82497aae}, !- Handle
+  Availability Manager Night Cycle 9 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {44463f1f-fc6f-4e29-8514-e37e06b464b5}, !- Handle
+  Availability Manager Night Cycle 9 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {8647e220-1994-47db-94ed-58063351e631}, !- Handle
+  Availability Manager Night Cycle 9 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {86854036-73b3-4f7c-b4b6-209561a67c61}, !- Handle
+  Availability Manager Night Cycle 9 Heating Zone Fans Only Zone List; !- Name
+
+OS:AvailabilityManager:NightCycle,
+  {18bc7b5c-7c7d-4dc2-ae2b-f82b1176c8e0}, !- Handle
+  Availability Manager Night Cycle 10,    !- Name
+  {2d1835b9-435a-489f-aa6b-ddd1b3aa0bcb}, !- Applicability Schedule
+  ,                                       !- Fan Schedule
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  ,                                       !- Cycling Run Time Control Type
+  3600,                                   !- Cycling Run Time {s}
+  {1d7fcae3-6208-41d6-a567-7a5989d33927}, !- Control Zone or Zone List Name
+  {bf942bf7-c542-4013-9898-f307bb885b1d}, !- Cooling Control Zone or Zone List Name
+  {0ed7c919-61cf-4a19-9772-df305fca6a6c}, !- Heating Control Zone or Zone List Name
+  {0b38f439-182b-4c4d-a150-c100c0ae9959}; !- Heating Zone Fans Only Zone or Zone List Name
+
+OS:ModelObjectList,
+  {1d7fcae3-6208-41d6-a567-7a5989d33927}, !- Handle
+  Availability Manager Night Cycle 10 Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {bf942bf7-c542-4013-9898-f307bb885b1d}, !- Handle
+  Availability Manager Night Cycle 10 Cooling Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {0ed7c919-61cf-4a19-9772-df305fca6a6c}, !- Handle
+  Availability Manager Night Cycle 10 Heating Control Zone List; !- Name
+
+OS:ModelObjectList,
+  {0b38f439-182b-4c4d-a150-c100c0ae9959}, !- Handle
+  Availability Manager Night Cycle 10 Heating Zone Fans Only Zone List; !- Name
+
+OS:Output:Variable,
+  {16b35095-30a8-46fa-a3d8-26085dfd8060}, !- Handle
+  Output Variable 17,                     !- Name
+  *,                                      !- Key Value
+  Zone Windows Total Heat Gain Energy,    !- Variable Name
   Hourly;                                 !- Reporting Frequency
 

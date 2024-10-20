@@ -1040,7 +1040,7 @@ Sizing:Zone,
   0.002032,                               !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
   0.1415762,                              !- Heating Maximum Air Flow {m3/s}
   0.3,                                    !- Heating Maximum Air Flow Fraction
-  ,                                       !- Design Specification Zone Air Distribution Object Name
+  Thermal Zone 1 Design Spec Zone Air Dist, !- Design Specification Zone Air Distribution Object Name
   No,                                     !- Account for Dedicated Outdoor Air System
   ,                                       !- Dedicated Outdoor Air System Control Strategy
   ,                                       !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
@@ -1053,6 +1053,11 @@ Sizing:Zone,
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
   0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
+DesignSpecification:ZoneAirDistribution,
+  Thermal Zone 1 Design Spec Zone Air Dist, !- Name
+  ,                                       !- Zone Air Distribution Effectiveness in Cooling Mode {dimensionless}
+  0.8;                                    !- Zone Air Distribution Effectiveness in Heating Mode {dimensionless}
+
 Controller:MechanicalVentilation,
   Controller Mechanical Ventilation 1,    !- Name
   Always On Discrete,                     !- Availability Schedule Name
@@ -1061,7 +1066,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 1,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - IT_Room Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 1 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 DesignSpecification:OutdoorAir,
   90.1-2010 - Office - IT_Room Ventilation, !- Name
@@ -1400,7 +1405,7 @@ Sizing:Zone,
   0.002032,                               !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
   0.1415762,                              !- Heating Maximum Air Flow {m3/s}
   0.3,                                    !- Heating Maximum Air Flow Fraction
-  ,                                       !- Design Specification Zone Air Distribution Object Name
+  Thermal Zone 2 Design Spec Zone Air Dist, !- Design Specification Zone Air Distribution Object Name
   No,                                     !- Account for Dedicated Outdoor Air System
   ,                                       !- Dedicated Outdoor Air System Control Strategy
   ,                                       !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
@@ -1413,6 +1418,11 @@ Sizing:Zone,
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
   0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
+DesignSpecification:ZoneAirDistribution,
+  Thermal Zone 2 Design Spec Zone Air Dist, !- Name
+  ,                                       !- Zone Air Distribution Effectiveness in Cooling Mode {dimensionless}
+  0.8;                                    !- Zone Air Distribution Effectiveness in Heating Mode {dimensionless}
+
 Controller:MechanicalVentilation,
   Controller Mechanical Ventilation 2,    !- Name
   Always On Discrete,                     !- Availability Schedule Name
@@ -1421,7 +1431,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 2,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - IT_Room Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 2 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 DesignSpecification:OutdoorAir:SpaceList,
   Thermal Zone 2 DSOA Space List,         !- Name
@@ -1777,7 +1787,7 @@ Sizing:Zone,
   0.002032,                               !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
   0.1415762,                              !- Heating Maximum Air Flow {m3/s}
   0.3,                                    !- Heating Maximum Air Flow Fraction
-  ,                                       !- Design Specification Zone Air Distribution Object Name
+  Thermal Zone 3 Design Spec Zone Air Dist, !- Design Specification Zone Air Distribution Object Name
   No,                                     !- Account for Dedicated Outdoor Air System
   ,                                       !- Dedicated Outdoor Air System Control Strategy
   ,                                       !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
@@ -1790,6 +1800,11 @@ Sizing:Zone,
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
   0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
+DesignSpecification:ZoneAirDistribution,
+  Thermal Zone 3 Design Spec Zone Air Dist, !- Name
+  ,                                       !- Zone Air Distribution Effectiveness in Cooling Mode {dimensionless}
+  0.8;                                    !- Zone Air Distribution Effectiveness in Heating Mode {dimensionless}
+
 Controller:MechanicalVentilation,
   Controller Mechanical Ventilation 3,    !- Name
   Always On Discrete,                     !- Availability Schedule Name
@@ -1798,7 +1813,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 3,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - Corridor Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 3 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 DesignSpecification:OutdoorAir,
   90.1-2010 - Office - Corridor Ventilation, !- Name
@@ -2376,7 +2391,7 @@ Sizing:Zone,
   0.002032,                               !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
   0.1415762,                              !- Heating Maximum Air Flow {m3/s}
   0.3,                                    !- Heating Maximum Air Flow Fraction
-  ,                                       !- Design Specification Zone Air Distribution Object Name
+  Thermal Zone 4 Design Spec Zone Air Dist, !- Design Specification Zone Air Distribution Object Name
   No,                                     !- Account for Dedicated Outdoor Air System
   ,                                       !- Dedicated Outdoor Air System Control Strategy
   ,                                       !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
@@ -2389,6 +2404,11 @@ Sizing:Zone,
   ,                                       !- Zone Humidification Design Supply Air Humidity Ratio {kgWater/kgDryAir}
   0.005;                                  !- Zone Humidification Design Supply Air Humidity Ratio Difference {kgWater/kgDryAir}
 
+DesignSpecification:ZoneAirDistribution,
+  Thermal Zone 4 Design Spec Zone Air Dist, !- Name
+  ,                                       !- Zone Air Distribution Effectiveness in Cooling Mode {dimensionless}
+  0.8;                                    !- Zone Air Distribution Effectiveness in Heating Mode {dimensionless}
+
 Controller:MechanicalVentilation,
   Controller Mechanical Ventilation 4,    !- Name
   Always On Discrete,                     !- Availability Schedule Name
@@ -2397,7 +2417,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 4,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - Conference Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 4 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 DesignSpecification:OutdoorAir,
   90.1-2010 - Office - Conference Ventilation, !- Name
@@ -2415,7 +2435,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 4,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - Conference Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 4 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 Controller:MechanicalVentilation,
   Controller Mechanical Ventilation 6,    !- Name
@@ -2425,7 +2445,7 @@ Controller:MechanicalVentilation,
   ,                                       !- Zone Maximum Outdoor Air Fraction {dimensionless}
   Thermal Zone 4,                         !- Zone or ZoneList Name 1
   90.1-2010 - Office - Conference Ventilation, !- Design Specification Outdoor Air Object Name 1
-  ;                                       !- Design Specification Zone Air Distribution Object Name 1
+  Thermal Zone 4 Design Spec Zone Air Dist; !- Design Specification Zone Air Distribution Object Name 1
 
 DesignSpecification:OutdoorAir:SpaceList,
   Thermal Zone 4 DSOA Space List,         !- Name
@@ -8988,7 +9008,7 @@ OutdoorAir:Node,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and ReheatAvailability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -9047,13 +9067,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and ReheatAvailability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 5;     !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 5,     !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat Supply Branches, !- Name
@@ -9350,7 +9375,7 @@ AirLoopHVAC:ZoneMixer,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat 1, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and Reheat 1Availability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 1, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat 1 Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -9409,13 +9434,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 1Availability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat 1 Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 1, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 6;     !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 1 Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 6,     !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat 1 Supply Branches, !- Name
@@ -9712,7 +9742,7 @@ AirLoopHVAC:ZoneMixer,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat 2, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and Reheat 2Availability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 2, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat 2 Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -9771,13 +9801,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 2Availability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat 2 Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 2, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 7;     !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 2 Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 7,     !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat 2 Supply Branches, !- Name
@@ -10074,7 +10109,7 @@ AirLoopHVAC:ZoneMixer,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat 3, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and Reheat 3Availability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 3, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat 3 Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -10133,13 +10168,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 3Availability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat 3 Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 3, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 8;     !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 3 Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 8,     !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat 3 Supply Branches, !- Name
@@ -10436,7 +10476,7 @@ AirLoopHVAC:ZoneMixer,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat 4, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and Reheat 4Availability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 4, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat 4 Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -10495,13 +10535,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 4Availability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat 4 Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 4, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 9;     !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 4 Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 9,     !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat 4 Supply Branches, !- Name
@@ -10798,7 +10843,7 @@ AirLoopHVAC:ZoneMixer,
 AirLoopHVAC,
   Packaged Rooftop VAV with PFP Boxes and Reheat 5, !- Name
   ,                                       !- Controller List Name
-  Packaged Rooftop VAV with PFP Boxes and Reheat 5Availability Manager List, !- Availability Manager List Name
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 5, !- Availability Manager List Name
   AutoSize,                               !- Design Supply Air Flow Rate {m3/s}
   Packaged Rooftop VAV with PFP Boxes and Reheat 5 Supply Branches, !- Branch List Name
   ,                                       !- Connector List Name
@@ -10857,13 +10902,18 @@ Sizing:System,
   Autosize;                               !- Occupant Diversity
 
 AvailabilityManagerAssignmentList,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 5Availability Manager List, !- Name
-  AvailabilityManager:Scheduled,          !- Availability Manager Object Type 1
-  Packaged Rooftop VAV with PFP Boxes and Reheat 5 Availability Manager; !- Availability Manager Name 1
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList 5, !- Name
+  AvailabilityManager:NightCycle,         !- Availability Manager Object Type 1
+  Availability Manager Night Cycle 10;    !- Availability Manager Name 1
 
-AvailabilityManager:Scheduled,
-  Packaged Rooftop VAV with PFP Boxes and Reheat 5 Availability Manager, !- Name
-  Always On Discrete;                     !- Schedule Name
+AvailabilityManager:NightCycle,
+  Availability Manager Night Cycle 10,    !- Name
+  Always On Discrete,                     !- Applicability Schedule Name
+  Always On Discrete,                     !- Fan Schedule Name
+  CycleOnAnyZoneFansOnly,                 !- Control Type
+  1,                                      !- Thermostat Tolerance {deltaC}
+  FixedRunTime,                           !- Cycling Run Time Control Type
+  3600;                                   !- Cycling Run Time {s}
 
 BranchList,
   Packaged Rooftop VAV with PFP Boxes and Reheat 5 Supply Branches, !- Name
@@ -11424,6 +11474,11 @@ Output:Variable,
 Output:Variable,
   *,                                      !- Key Value
   Cooling Coil Total Cooling Rate,        !- Variable Name
+  Hourly;                                 !- Reporting Frequency
+
+Output:Variable,
+  *,                                      !- Key Value
+  Zone Windows Total Heat Gain Energy,    !- Variable Name
   Hourly;                                 !- Reporting Frequency
 
 Output:Variable,

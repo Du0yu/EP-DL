@@ -296,48 +296,33 @@ def modify_data_each_timestep(state):
 
     #Maybe used to calculate total HVAC energy
 
-    EPLUS.E_Facility.append(api.exchange.get_meter_value(state, EPLUS.E_Facility_handle))
+    # EPLUS.E_Facility.append(api.exchange.get_meter_value(state, EPLUS.E_Facility_handle))
     EPLUS.E_HVAC.append(api.exchange.get_meter_value(state,     EPLUS.E_HVAC_handle))
     EPLUS.E_Heating.append(api.exchange.get_meter_value(state,  EPLUS.E_Heating_handle))
     EPLUS.E_Cooling.append(api.exchange.get_meter_value(state,  EPLUS.E_Cooling_handle))
 
 
 
-
-    # 获取执行器句柄，注意这里需要提供控件类型、控件名称等参数
-    zone1_cooling_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Cooling Setpoint",
-                                                                 "Thermal Zone 1")
-    zone1_heating_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Heating Setpoint",
-                                                                 "Thermal Zone 1")
-    zone2_cooling_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Cooling Setpoint",
-                                                                 "Thermal Zone 2")
-    zone2_heating_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Heating Setpoint",
-                                                                 "Thermal Zone 2")
-    zone3_cooling_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Cooling Setpoint",
-                                                                 "Thermal Zone 3")
-    zone3_heating_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Heating Setpoint",
-                                                                 "Thermal Zone 3")
-    zone4_cooling_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Cooling Setpoint",
-                                                                 "Thermal Zone 4")
-    zone4_heating_actuator_handle = exchange.get_actuator_handle(state, "Zone Temperature Control", "Heating Setpoint",
-                                                                 "Thermal Zone 4")
-    if zone3_cooling_actuator_handle == -1 or zone3_heating_actuator_handle == -1:
+    if EPLUS.hvac_clg_3_handle == -1 or EPLUS.hvac_htg_3_handle == -1:
         print("Actuator handle not found")
     else:
         print(
-            f"Cooling Actuator Handle: {zone3_cooling_actuator_handle}\n Heating Actuator Handle: {zone3_heating_actuator_handle}")
+            f"Cooling Actuator Handle: {EPLUS.hvac_clg_3_handle}\n Heating Actuator Handle: {EPLUS.hvac_htg_3_handle}")
+
+        print(f"HVAC_meter_Handle: {EPLUS.E_HVAC_handle}\n")
+
 
         # 根据需要修改设定点温度
         new_cooling_setpoint = 26.0  # 修改为新的设定温度值
         new_heating_setpoint = 25.0
-        exchange.set_actuator_value(state, zone1_cooling_actuator_handle, new_cooling_setpoint)
-        exchange.set_actuator_value(state, zone1_heating_actuator_handle, new_heating_setpoint)
-        exchange.set_actuator_value(state, zone2_cooling_actuator_handle, new_cooling_setpoint)
-        exchange.set_actuator_value(state, zone2_heating_actuator_handle, new_heating_setpoint)
-        exchange.set_actuator_value(state, zone3_cooling_actuator_handle, new_cooling_setpoint)
-        exchange.set_actuator_value(state, zone3_heating_actuator_handle, new_heating_setpoint)
-        exchange.set_actuator_value(state, zone4_cooling_actuator_handle, new_cooling_setpoint)
-        exchange.set_actuator_value(state, zone4_heating_actuator_handle, new_heating_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_clg_1_handle, new_cooling_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_htg_1_handle, new_heating_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_clg_2_handle, new_cooling_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_htg_2_handle, new_heating_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_clg_3_handle, new_cooling_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_htg_3_handle, new_heating_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_clg_4_handle, new_cooling_setpoint)
+        exchange.set_actuator_value(state, EPLUS.hvac_htg_4_handle, new_heating_setpoint)
         print(f"Set new temperature setpoint: Cooling: {new_cooling_setpoint} Heating: {new_heating_setpoint}")
 
 
