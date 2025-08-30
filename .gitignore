@@ -1,0 +1,9 @@
+# Ignore all output directories
+benchmark_data_output/
+sim_ep_output/
+sim_hvac_output/
+
+# Other ignored files or folders (if needed)
+*.pyc
+__pycache__/
+.idea/

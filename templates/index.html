@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EPLUS Data Display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        div {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        #temperatureChart {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+        #episodeRewardChart {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>EPLUS Data Display</h1>
+    <div>
+        <h3>General Information</h3>
+        <p>Running Status: <span id="running_status"></span></p>
+        <p>Current Timestamp: <span id="current_time_stamp"></span></p>
+        <p>View Distance: <span id="view_distance"></span></p>
+        <p>NUM_HVAC: <span id="NUM_HVAC"></span></p>
+        <p>FPS: <span id="FPS"></span></p>
+        <h3>RL Simulation Stats</h3>
+        <p>Episode Reward: <span id="episode_reward"></span></p>
+        <p>Episode Return: <span id="episode_return"></span></p>
+        <p>Current Action: <span id="current_action"></span></p>
+        <p>Current Reward: <span id="current_reward"></span></p>
+        <p>Inactive Handles: <span id="inactive_handles"></span></p>
+        <h3>Temperature Data</h3>
+        <p>Current Temperature: <span id="current_temperature"></span></p>
+        <p>Mean Temperature: <span id="T_mean"></span></p>
+        <p>Temperature Variance: <span id="T_var"></span></p>
+        <h3>Score Data</h3>
+        <p>Score: <span id="score"></span></p>
+        <p>Temperature Violation: <span id="T_Violation"></span></p>
+        <h3>Temperature Chart</h3>
+        <div id="temperatureChart"></div>
+        <h3>Episode Reward Chart</h3>
+        <div id="episodeRewardChart"></div>
+    </div>
+
+    <script>
+        const rewardChart = echarts.init(document.getElementById('episodeRewardChart'));
+        const rewardOption = {
+            title: {
+                text: 'Episode Reward',
+                left: 'center',
+                textStyle: {
+                    color: '#333'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter: '{b}<br>{a}: {c}'
+            },
+            legend: {
+                data: ['Episode Reward'],
+                top: '10%',
+                left: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []// Initial data will be populated dynamically
+
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'Episode Reward',
+                    type: 'line',
+                    data: [], // Data will be pushed dynamically
+                    smooth: true
+                }
+            ]
+        };
+        let previousLength = 0; // Initialize the previous length of the episode_returns array
+        rewardChart.setOption(rewardOption);
+
+        const myChart = echarts.init(document.getElementById('temperatureChart'));
+        const maxDataPoints = 20; // 最大数据点数量
+        const option = {
+            title: {
+                text: 'Zone Temperatures',
+                left: 'center',
+                textStyle: {
+                    color: '#333'
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Zone Temperature 1', 'Zone Temperature 2', 'Zone Temperature 3', 'Zone Temperature 4', 'Zone Temperature 5', 'Zone Temperature 6','Outdoor Temperature'],
+                top: '10%',
+                left: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: []
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                { name: 'Zone Temperature 1', type: 'line', data: [], smooth: true },
+                { name: 'Zone Temperature 2', type: 'line', data: [], smooth: true },
+                { name: 'Zone Temperature 3', type: 'line', data: [], smooth: true },
+                { name: 'Zone Temperature 4', type: 'line', data: [], smooth: true },
+                { name: 'Zone Temperature 5', type: 'line', data: [], smooth: true },
+                { name: 'Zone Temperature 6', type: 'line', data: [], smooth: true },
+                { name: 'Outdoor Temperature', type: 'line', data: [], smooth: true }
+            ]
+        };
+
+        myChart.setOption(option);
+
+        if (!!window.EventSource) {
+            const source = new EventSource("/metrics");
+
+            source.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                // 提取 current_timestamp 的各个字段
+                const timestamp = data.current_timestamp;
+                const formattedTimestamp = `
+                    Year: ${timestamp.year}
+                    Month: ${timestamp.month}
+                    Day: ${timestamp.day}
+                    Hour: ${timestamp.hour}
+                    Minute: ${timestamp.minute}
+                    Current Time: ${timestamp.current_time}
+                    Actual Date Time: ${timestamp.actual_date_time}
+                    Actual Time: ${timestamp.actual_time}
+                    Time Step: ${timestamp.time_step}
+                `;
+                document.getElementById("running_status").innerText = data.running_status
+                // 更新显示内容
+                document.getElementById("current_time_stamp").innerText = formattedTimestamp.trim();
+
+                document.getElementById("FPS").innerText = data.FPS;
+                document.getElementById("view_distance").innerText = data.view_distance;
+                document.getElementById("NUM_HVAC").innerText = data.NUM_HVAC
+
+
+                document.getElementById("episode_reward").innerText = data.episode_reward
+                document.getElementById("episode_return").innerText = data.episode_return
+                document.getElementById("inactive_handles").innerText = data.inactive_handle;
+                document.getElementById("current_action").innerText = data.current_action
+                document.getElementById("current_reward").innerText = data.current_reward
+
+                const tMean = data.T_mean;
+                document.getElementById("T_mean").innerText = tMean !== null ? tMean.toFixed(2) : "N/A";
+
+                const tVar = data.T_var
+                document.getElementById("T_var").innerText = tVar !==null ? tVar.toFixed(2) : "N/A"
+
+                const score = data.score
+                document.getElementById("score").innerText = score !==null ? score.toFixed(2) : "N/A"
+
+                const tVio = data.T_Violation
+                document.getElementById("T_Violation").innerText = tVio !==null ? tVio.toFixed(2) : "N/A"
+
+                // 获取 zone_temp 列表
+                const zoneTempList = data.zone_temp;
+
+                // 更新当前温度的显示
+                const formattedZoneTemp = zoneTempList.map(temp => temp.toFixed(2)).join(', '); // 保留两位小数并格式化为字符串
+                document.getElementById("current_temperature").innerText = `${formattedZoneTemp}`;
+                // 更新图表数据
+                const currentTime = `${timestamp.hour}:${timestamp.minute}`; // 时间标签
+                option.xAxis.data.push(currentTime); // 添加时间标签
+
+                zoneTempList.forEach((temp, index) => {
+                    if (option.series[index]) {
+                        option.series[index].data.push(temp); // 将温度值添加到相应的系列中
+                    }
+                });
+
+                // 如果超过最大数据点数量，则移除最旧的数据
+                if (option.xAxis.data.length > maxDataPoints) {
+                    option.xAxis.data.shift(); // 移除最旧的时间标签
+                    option.series.forEach(series => {
+                        series.data.shift(); // 移除对应的温度值
+                    });
+                }
+
+                myChart.setOption(option); // 更新图表
+
+                const episode_returns = data.episode_returns;
+
+                const currentLength = episode_returns.length;
+                rewardOption.xAxis.data = Array.from({length: episode_returns.length}, (_, index) => index); // Add the episode number
+                rewardOption.series[0].data = episode_returns; // Replace the episode_reward data with the new episode_returns data
+
+                rewardChart.setOption(rewardOption); // Update the chart
+
+            };
+        }
+    </script>
+</body>
+</html>
